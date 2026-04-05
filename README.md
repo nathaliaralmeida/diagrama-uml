@@ -1,9 +1,11 @@
+```mermaid
 classDiagram
+    %% Entidades Principais
     class Profissional {
         +int id_profissional
         +String nome
         +String registro_conselho
-        +String especialidade (Medico, Enfermeiro, Terapeuta)
+        +String especialidade
         +float percentual_repasse
         +consultarPacientes()
         +calcularRemuneracao(mes, ano)
@@ -38,9 +40,9 @@ classDiagram
         +float valor_referencia
     }
 
+    %% Relacionamentos (Regras de Negócio)
     Profissional "1..*" -- "0..*" Paciente : acompanha >
     Profissional "1" -- "0..*" Atendimento : realiza >
     Paciente "1" -- "0..*" Atendimento : recebe >
     Atendimento "1" -- "0..1" Avaliacao : gera >
     Atendimento "0..*" -- "1" TabelaRepasse : baseia-se em >
-    
