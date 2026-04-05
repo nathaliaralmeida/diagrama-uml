@@ -66,3 +66,4 @@ classDiagram
 
     %% g) Avaliação é registrada ao final de cada atendimento
     Atendimento "1" -- "0..1" Avaliacao : gera
+    
