@@ -1,69 +1,46 @@
-# Diagrama UML - Clínica de Reabilitação Saint Germain
-
-```mermaid
 classDiagram
     class Profissional {
-        +int id
+        +int id_profissional
         +String nome
-        +String especialidade
-        +String crm
-        +String coren
-        +float taxa_base
-        +gerarRelacaoPacientes() 
-        +calcularPagamentoMensal()
+        +String registro_conselho
+        +String especialidade (Medico, Enfermeiro, Terapeuta)
+        +float percentual_repasse
+        +consultarPacientes()
+        +calcularRemuneracao(mes, ano)
     }
 
     class Paciente {
-        +int id
+        +int id_paciente
         +String nome
-        +Date data_nascimento
-        +Date data_admissao
-        +String status
-        +calcularTempoTratamento()
+        +DateTime data_admissao
+        +String status_tratamento
+        +getResponsaveis()
     }
 
     class Atendimento {
-        +int id
-        +Date data_atendimento
-        +Time hora
+        +int id_atendimento
+        +DateTime data_hora
+        +String tipo_tratamento
         +String descricao
         +float valor_base
-        +obterDiaSemana()
-    }
-
-    class Tratamento {
-        +int id
-        +String nome_tratamento
-        +String categoria
+        +registrarAvaliacao(nota, comentario)
     }
 
     class Avaliacao {
-        +int id
+        +int id_avaliacao
         +int nota_desempenho
-        +String comentario_evolucao
+        +String observacoes
     }
 
     class TabelaRepasse {
-        +int id_tratamento
-        +float valor_repasse
-        +Date vigencia
+        +int id_item
+        +String servico
+        +float valor_referencia
     }
 
-    %% RELACIONAMENTOS REAIS DO MINI-MUNDO
-    
-    %% h) Um profissional é responsável por um conjunto de pacientes (1:N)
-    Profissional "1" -- "0..*" Paciente : é responsável por
-
-    %% a, b, c) Atendimentos ligam Profissional e Paciente
-    Profissional "1" -- "0..*" Atendimento : realiza
-    Paciente "1" -- "0..*" Atendimento : recebe
-
-    %% e) Atendimentos utilizam tratamentos específicos
-    Atendimento "0..*" -- "1" Tratamento : executa
-
-    %% d) Tabela de repasse define valores por tratamento
-    Tratamento "1" -- "1" TabelaRepasse : define valor de
-
-    %% g) Avaliação é registrada ao final de cada atendimento
-    Atendimento "1" -- "0..1" Avaliacao : gera
+    Profissional "1..*" -- "0..*" Paciente : acompanha >
+    Profissional "1" -- "0..*" Atendimento : realiza >
+    Paciente "1" -- "0..*" Atendimento : recebe >
+    Atendimento "1" -- "0..1" Avaliacao : gera >
+    Atendimento "0..*" -- "1" TabelaRepasse : baseia-se em >
     
