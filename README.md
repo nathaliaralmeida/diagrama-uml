@@ -1,5 +1,28 @@
 ```mermaid
 classDiagram
+    class GeradorAgenda {
+        +String unidade
+        +String predio
+        +String sala
+        +String especialidade
+        +Date data_inicial
+        +Date data_final
+        +Time hora_inicial
+        +Time hora_final
+        +int tempo_minutos
+        +String periodicidade
+        +boolean check_segunda
+        +boolean check_terca
+        +boolean check_quarta
+        +boolean check_quinta
+        +boolean check_sexta
+        +boolean check_sabado
+        +boolean check_domingo
+        +boolean verificar_choque
+        +boolean exibir_web
+        +gerarAgenda()
+    }
+
     class Profissional {
         +int id_profissional
         +String nome
@@ -39,4 +62,16 @@ classDiagram
         +float valor_base
     }
 
- 
+    %% RELACIONAMENTOS
+
+    Profissional "1" -- "0..*" GeradorAgenda : configura
+    GeradorAgenda "1" -- "0..*" Atendimento : gera
+
+    Profissional "1..*" -- "0..*" Paciente : responsável por
+
+    Profissional "1" -- "0..*" Atendimento : realiza
+    Paciente "1" -- "0..*" Atendimento : recebe
+
+    Atendimento "0..*" -- "1" TabelaRepasse : utiliza
+
+    Atendimento "1" -- "0..1" Avaliacao : gera
